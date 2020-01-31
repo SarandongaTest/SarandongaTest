@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a143ef974dc6a543ae0aa035bcf53ec, type: 3}
   m_Name: CardExample
   m_EditorClassIdentifier: 
-  name: 
-  description: 
+  name: Example
+  description: Example description
