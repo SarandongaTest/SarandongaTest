@@ -6,5 +6,6 @@ using UnityEngine;
 public class Card : ScriptableObject {
 
     public new string name;
+    [TextArea]
     public string description;
 }
