@@ -12,7 +12,7 @@ public class CardDisplay : MonoBehaviour {
         this.card = card;
     }
 
-    void Start() {
+    void Awake() {
         if (card != null) {
             SetDisplays();
         }
@@ -25,6 +25,7 @@ public class CardDisplay : MonoBehaviour {
     }
 
     public void SetDisplays() {
+        name = card.name + GetInstanceID() ;
         cardDescription.text = card.description;
     }
 
