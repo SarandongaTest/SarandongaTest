@@ -25,15 +25,9 @@ public class CardMovement : MonoBehaviour {
     private void OnMouseDrag() {
         objective = GetWorldPositionOnPlane(Input.mousePosition, 0);
         Vector3 euler = transform.localEulerAngles;
-
         euler.x = rb.velocity.y;
         euler.y = -rb.velocity.x;
-
-
         transform.localEulerAngles = euler;
-
-        //rb.MovePosition(objective + offset);
-        //transform.position = GetWorldPositionOnPlane(Input.mousePosition, 0);
     }
 
     private void OnMouseUp() {
