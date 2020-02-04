@@ -6,16 +6,17 @@ using UnityEngine;
 public class CardFileInterface : MonoBehaviour {
     
     public GameObject cardPrefab;
+    public static CardFileInterface instance;
+
+    private void Start() {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(this.gameObject);
+        }
+    }
 
     private const string fileName = "/JSONFiles/Cards.json";
-
-    void Start() {
-
-        /*foreach (string json in ReadAllLines()) {
-            GameObject instance = CardDisplay.InstanciateCard(Card.ExtractAndBuildFromJSON(json), cardPrefab, playerHand);
-            playerHand.GetComponent<PlayerHand>().AddCard(instance);
-        }*/
-    }
 
     public string[] ReadAllLines() {
         return File.ReadAllLines(Application.dataPath + fileName);
@@ -27,10 +28,16 @@ public class CardFileInterface : MonoBehaviour {
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            PlayerHand.instance.AddCard(
-                CardDisplay.InstanciateCard(Card.ExtractAndBuildFromJSON(ReadAllLines()[0]),
-                cardPrefab,
-                PlayerHand.instance.gameObject));
+            Deal();
         }
     }
+
+    //todo pasar esto a un gamecontroller
+    public void Deal() {
+        PlayerHand.instance.AddCard(
+                        CardDisplay.InstanciateCard(Card.CardFromJSON(ReadAllLines()[0]),
+                        cardPrefab,
+                        PlayerHand.instance.gameObject));
+    }
+
 }

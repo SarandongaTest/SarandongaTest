@@ -5,7 +5,6 @@ using UnityEngine;
 public class CardMovement : MonoBehaviour {
 
     private Vector3 boardPosition;
-    private Vector3 offset;
     private Rigidbody2D rb;
 
     private Vector3 objective;
@@ -19,25 +18,30 @@ public class CardMovement : MonoBehaviour {
 
     private void Update() {
         if (mousePressed) {
-            rb.AddForce((objective - transform.position) * 200);
-            Vector3 euler = transform.localEulerAngles;
-            euler.x = rb.velocity.y;
-            euler.y = -rb.velocity.x;
-            transform.localEulerAngles = euler;
+            MoveToObjective();
         } else if (moved) {
-            if (Vector3.Distance(transform.position, boardPosition) < 0.25) {
+            if (Vector3.Distance(transform.position, boardPosition) > 0.25) { 
+                /************************/
+                objective = boardPosition;
+                /* PUEDE
+                * BUGEAR
+                * *************************/
+                MoveToObjective();
+            } else {
                 transform.position = boardPosition;
                 transform.localEulerAngles = Vector3.zero;
                 rb.velocity = Vector3.zero;
                 moved = false;
-            } else {
-                rb.AddForce((boardPosition - transform.position) * 200);
-                Vector3 euler = transform.localEulerAngles;
-                euler.x = rb.velocity.y;
-                euler.y = -rb.velocity.x;
-                transform.localEulerAngles = euler;
             }
         }
+    }
+
+    private void MoveToObjective() {
+        rb.AddForce((objective - transform.position) * 200);
+        Vector3 euler = transform.localEulerAngles;
+        euler.x = rb.velocity.y;
+        euler.y = -rb.velocity.x;
+        transform.localEulerAngles = euler;
     }
 
     public void SetPosition(Vector3 position) {
@@ -47,7 +51,6 @@ public class CardMovement : MonoBehaviour {
 
     private void OnMouseDown() {
         mousePressed = true;
-        offset = transform.position - GetWorldPositionOnPlane(Input.mousePosition, 0);
         PlayerHand.instance.RemoveCard(name);
     }
 
@@ -58,9 +61,6 @@ public class CardMovement : MonoBehaviour {
     private void OnMouseUp() {
         mousePressed = false;
         PlayerHand.instance.AddCard(gameObject);
-        /*rb.velocity = Vector3.zero;
-        transform.position = boardPosition;
-        transform.localEulerAngles = Vector3.zero;*/
     }
 
     public Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z) {

@@ -30,6 +30,15 @@ public class CardDisplay : MonoBehaviour {
     }
 
     public static GameObject InstanciateCard(Card card, GameObject cardPrefab, GameObject parent) {
-        return Instantiate(cardPrefab.GetComponent<CardDisplay>().SetCard(card), parent.transform);
+        return Instantiate(
+            cardPrefab.GetComponent<CardDisplay>().SetCard(card),
+            parent.transform);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Board")) {
+            CardFileInterface.instance.Deal();
+            Destroy(this.gameObject);
+        }
     }
 }
