@@ -34,8 +34,9 @@ public class CardFileInterface : MonoBehaviour {
 
     //todo pasar esto a un gamecontroller
     public void Deal() {
+        string[] cards = ReadAllLines();
         PlayerHand.instance.AddCard(
-                        CardDisplay.InstanciateCard(Card.CardFromJSON(ReadAllLines()[0]),
+                        CardDisplay.InstanciateCard(Card.CardFromJSON(cards[Random.Range(0, cards.Length)]),
                         cardPrefab,
                         PlayerHand.instance.gameObject));
     }
