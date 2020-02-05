@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Card", menuName = "Card")]
-[Serializable]
 public class Card : ScriptableObject {
 
     public new string name;
@@ -24,7 +23,7 @@ public class Card : ScriptableObject {
         JsonUtility.FromJsonOverwrite(json, this);
     }
 
-    public static Card ExtractAndBuildFromJSON(string json) {
+    public static Card CardFromJSON(string json) {
         Card card = ScriptableObject.CreateInstance<Card>();
         JsonUtility.FromJsonOverwrite(json, card);
         return card;
