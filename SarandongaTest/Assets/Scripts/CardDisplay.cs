@@ -18,27 +18,35 @@ public class CardDisplay : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Set the card information and update the display
+    /// </summary>
+    /// <param name="card"></param>
+    /// <returns></returns>
     public GameObject SetCard(Card card) {
         this.card = card;
         SetDisplays();
         return this.gameObject;
     }
 
+    /// <summary>
+    /// Update the display
+    /// </summary>
     public void SetDisplays() {
         name = card.name + GetInstanceID() ;
         cardDescription.text = card.description;
     }
 
-    public static GameObject InstanciateCard(Card card, GameObject cardPrefab, GameObject parent) {
+    /// <summary>
+    /// Instanciate a CardDisplay GameObject
+    /// </summary>
+    /// <param name="card"></param>
+    /// <param name="cardPrefab"></param>
+    /// <param name="parent"></param>
+    /// <returns></returns>
+    public static GameObject InstanciateCardDisplay(Card card, GameObject cardPrefab, GameObject parent) {
         return Instantiate(
             cardPrefab.GetComponent<CardDisplay>().SetCard(card),
             parent.transform);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Board")) {
-            //CardFileInterface.instance.Deal();
-            //Destroy(this.gameObject);
-        }
     }
 }
