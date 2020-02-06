@@ -37,8 +37,8 @@ public class CardDisplay : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Board")) {
-            CardFileInterface.instance.Deal();
-            Destroy(this.gameObject);
+            //CardFileInterface.instance.Deal();
+            //Destroy(this.gameObject);
         }
     }
 }
