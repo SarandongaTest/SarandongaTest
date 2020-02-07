@@ -44,9 +44,9 @@ public class CardFileInterface : MonoBehaviour {
     private void Update() {
     /* 
      *SOLO PARA DEBUG - ELIMINAR AL FINAL 
-     */
+     
         if (Input.GetKeyDown(KeyCode.Space)) {
             GameController.Deal();
-        }
+        }*/
     }
 }

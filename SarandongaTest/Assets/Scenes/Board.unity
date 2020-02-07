@@ -907,7 +907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5544675152204545b4d43a1f0b2d975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 4412034275234937390, guid: 2eab004ab54363648ae607849e8ed007,
+  cardPrefab: {fileID: 2638206613184261409, guid: 3fb2f9f8cd4542f43833145dca16c904,
     type: 3}
 --- !u!4 &1480485030
 Transform:

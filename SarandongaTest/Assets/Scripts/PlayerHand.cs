@@ -22,7 +22,7 @@ public class PlayerHand : MonoBehaviour {
     /// <param name="card"></param>
     public void AddCard(GameObject card) {
         hand.Add(card.name, card);
-        setCardsPositions();
+        SetCardsPositions();
     }
 
     /// <summary>
@@ -31,13 +31,13 @@ public class PlayerHand : MonoBehaviour {
     /// <param name="id"></param>
     public void RemoveCard(string id) {
         hand.Remove(id);
-        setCardsPositions();
+        SetCardsPositions();
     }
 
     /// <summary>
     /// Set the position of all the cards
     /// </summary>
-    private void setCardsPositions() {
+    private void SetCardsPositions() {
         int i = 0;
         foreach (string id in hand.Keys) {
             Vector3 position = new Vector3(spacing * i - spacing * (hand.Count - 1) / 2, 0, 0);

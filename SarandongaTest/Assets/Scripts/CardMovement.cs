@@ -44,7 +44,7 @@ public class CardMovement : MonoBehaviour {
     }
 
     /// <summary>
-    /// Set the position in the board
+    /// Set the cardDisplay position in the board
     /// </summary>
     /// <param name="position"></param>
     public void SetPosition(Vector3 position) {
