@@ -16,12 +16,6 @@ public class PlayerHand : MonoBehaviour {
         }
     }
 
-    private void Start() {
-        while (hand.Count < 10) {
-            GameController.Deal();
-        }
-    }
-
     /// <summary>
     /// Add a CardDisplay to the hand and reajust the positions
     /// </summary>

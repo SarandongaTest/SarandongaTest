@@ -65,18 +65,11 @@ public class CardMovement : MonoBehaviour {
     }
 
     private void OnMouseDrag() {
-        mousePostion = GetWorldPositionOnPlane(Input.mousePosition, 1);
+        mousePostion = UIController.GetWorldPositionOnPlane(Input.mousePosition, 1);
     }
 
     private void OnMouseUp() {
         mousePressed = false;
         PlayerHand.instance.AddCard(gameObject);
-    }
-
-    public static Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z) {
-        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-        Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
-        xy.Raycast(ray, out float distance);
-        return ray.GetPoint(distance);
     }
 }

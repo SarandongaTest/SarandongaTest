@@ -20,18 +20,12 @@ public class UIController : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
-    void Start() {
-        SetBackgroundSize();
-        SetPlayerHandPosition();
+
+    public void SetPlayerHandPosition() {
+        playerHand.transform.position = GetWorldPositionOnPlane(new Vector3(Screen.width / 2, Screen.height / 5, 0), 0);
     }
 
-    private void SetPlayerHandPosition() {
-        Vector3 pos = CardMovement.GetWorldPositionOnPlane(new Vector3(Screen.width / 2, Screen.height / 5, 0), 0);
-        pos.z = 0;
-        playerHand.transform.position = pos;
-    }
-
-    private void SetBackgroundSize() {
+    public void SetBackgroundSize() {
         background.GetComponent<RectTransform>().sizeDelta = new Vector2(0, Screen.height * 2 / 5);
     }
 
@@ -40,5 +34,12 @@ public class UIController : MonoBehaviour {
         cardDisplay.SetActive(v);
         if(card != null)
         cardDisplay.GetComponent<CardDisplay>().SetCard(card);
+    }
+
+    public static Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z) {
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
+        xy.Raycast(ray, out float distance);
+        return ray.GetPoint(distance);
     }
 }
