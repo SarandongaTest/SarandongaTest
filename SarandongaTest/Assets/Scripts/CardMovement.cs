@@ -65,7 +65,7 @@ public class CardMovement : MonoBehaviour {
     }
 
     private void OnMouseDrag() {
-        mousePostion = UIController.GetWorldPositionOnPlane(Input.mousePosition, 1);
+        mousePostion = UIController.GetWorldPositionOnPlane(Input.mousePosition, transform.position.z);
     }
 
     private void OnMouseUp() {

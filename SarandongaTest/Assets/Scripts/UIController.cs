@@ -25,7 +25,7 @@ public class UIController : MonoBehaviour {
     /// Set the player hand to the middle of the background
     /// </summary>
     public void SetPlayerHandPosition() {
-        playerHand.transform.position = GetWorldPositionOnPlane(new Vector3(Screen.width / 2, Screen.height / 5, 0), 0);
+        playerHand.transform.position = GetWorldPositionOnPlane(new Vector3(Screen.width / 2, Screen.height / 5, playerHand.transform.position.z), playerHand.transform.position.z);
     }
 
     /// <summary>

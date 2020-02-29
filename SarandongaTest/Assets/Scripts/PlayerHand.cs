@@ -40,7 +40,7 @@ public class PlayerHand : MonoBehaviour {
     private void SetCardsPositions() {
         int i = 0;
         foreach (string id in hand.Keys) {
-            Vector3 position = new Vector3(spacing * i - spacing * (hand.Count - 1) / 2, 0, 0);
+            Vector3 position = new Vector3(spacing * i - spacing * (hand.Count - 1) / 2, 0, transform.position.z);
             hand[id].GetComponent<CardMovement>().SetPosition(transform.position + position);
             i++;
         }
