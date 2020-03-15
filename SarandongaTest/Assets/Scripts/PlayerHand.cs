@@ -7,8 +7,8 @@ public class PlayerHand : MonoBehaviour {
 
     public static PlayerHand instance;
     public Dictionary<string, GameObject> hand = new Dictionary<string, GameObject>();
-
-    private void Start() {
+    public float spacing = 2.5f;
+    private void Awake() {
         if (instance == null) {
             instance = this;
         } else {
@@ -16,22 +16,32 @@ public class PlayerHand : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Add a CardDisplay to the hand and reajust the positions
+    /// </summary>
+    /// <param name="card"></param>
     public void AddCard(GameObject card) {
         hand.Add(card.name, card);
-        setCardsPositions();
+        SetCardsPositions();
     }
 
+    /// <summary>
+    /// Remove a CardDisplay of the hand and reajust the positions
+    /// </summary>
+    /// <param name="id"></param>
     public void RemoveCard(string id) {
         hand.Remove(id);
-        setCardsPositions();
+        SetCardsPositions();
     }
 
-    private void setCardsPositions() {
-        float spacing = 2700 / Screen.width;
+    /// <summary>
+    /// Set the position of all the cards
+    /// </summary>
+    private void SetCardsPositions() {
         int i = 0;
         foreach (string id in hand.Keys) {
-            Vector3 position = new Vector3(spacing * i - spacing * (hand.Count - 1) / 2, 0, 0);
-            hand[id].GetComponent<CardMovement>().SetPosition(transform.parent.transform.position + position);
+            Vector3 position = new Vector3(spacing * i - spacing * (hand.Count - 1) / 2, 0, transform.position.z);
+            hand[id].GetComponent<CardMovement>().SetPosition(transform.position + position);
             i++;
         }
     }

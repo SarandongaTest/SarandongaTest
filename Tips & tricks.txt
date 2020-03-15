@@ -1,0 +1,13 @@
+*Cosas útiles*
+ctrl + k - ctrl + d ==> Autoformatear
+f12 ==> ir a definición
+/// ==> añade documentación
+
+*Clases definidas*
+Card ==> Define la información de la carta
+CardDisplay ==> Muerta la información de Card
+CardMovement ==> u know
+UIController ==> todo el manejo de la interfaz
+GameController ==> flow del juego
+PlayerHand ==> guarda la mano y la coloca
+CardFileInterface ==> manejo de fichero (CAMBIAR PARA TENER MÁS CARTAS)

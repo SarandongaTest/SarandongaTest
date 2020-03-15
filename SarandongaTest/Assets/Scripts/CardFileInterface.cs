@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class CardFileInterface : MonoBehaviour {
     
-    public GameObject cardPrefab;
     public static CardFileInterface instance;
+    private const string fileName = "/JSONFiles/Cards.json";
 
     private void Start() {
         if (instance == null) {
@@ -16,29 +16,37 @@ public class CardFileInterface : MonoBehaviour {
         }
     }
 
-    private const string fileName = "/JSONFiles/Cards.json";
-
-    public string[] ReadAllLines() {
+    /// <summary>
+    /// Reads all the lines on the JSON file
+    /// </summary>
+    /// <returns></returns>
+    public static string[] ReadAllLines() {
         return File.ReadAllLines(Application.dataPath + fileName);
     }
 
-    public void AppendLine(Card card) {
+    /// <summary>
+    /// Adds the Card information to the end of the file
+    /// </summary>
+    /// <param name="card"></param>
+    public static void AppendLine(Card card) {
         File.AppendAllText(Application.dataPath + fileName, "\r\n" + JsonUtility.ToJson(card));
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Deal();
-        }
-    }
-
-    //todo pasar esto a un gamecontroller
-    public void Deal() {
+    /// <summary>
+    /// Return a random line from the JSON file
+    /// </summary>
+    /// <returns></returns>
+    public static string RandomLine() {
         string[] cards = ReadAllLines();
-        PlayerHand.instance.AddCard(
-                        CardDisplay.InstanciateCard(Card.CardFromJSON(cards[Random.Range(0, cards.Length)]),
-                        cardPrefab,
-                        PlayerHand.instance.gameObject));
+        return cards[Random.Range(0, cards.Length)];
     }
 
+    private void Update() {
+    /* 
+     *SOLO PARA DEBUG - ELIMINAR AL FINAL 
+     
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            GameController.Deal();
+        }*/
+    }
 }

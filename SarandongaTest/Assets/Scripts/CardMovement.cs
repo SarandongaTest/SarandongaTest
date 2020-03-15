@@ -6,27 +6,22 @@ public class CardMovement : MonoBehaviour {
 
     private Vector3 boardPosition;
     private Rigidbody2D rb;
+    public int cardSpeed = 200;
 
-    private Vector3 objective;
+    private Vector3 mousePostion;
     private bool mousePressed;
     private bool moved = false;
 
-    private void Awake() {
-        boardPosition = transform.position;
+    private void Start() {
         rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update() {
         if (mousePressed) {
-            MoveToObjective();
+            MoveToObjective(mousePostion);
         } else if (moved) {
-            if (Vector3.Distance(transform.position, boardPosition) > 0.25) { 
-                /************************/
-                objective = boardPosition;
-                /* PUEDE
-                * BUGEAR
-                * *************************/
-                MoveToObjective();
+            if (Vector3.Distance(transform.position, boardPosition) > 0.25) {
+                MoveToObjective(boardPosition);
             } else {
                 transform.position = boardPosition;
                 transform.localEulerAngles = Vector3.zero;
@@ -36,38 +31,45 @@ public class CardMovement : MonoBehaviour {
         }
     }
 
-    private void MoveToObjective() {
-        rb.AddForce((objective - transform.position) * 200);
+    /// <summary>
+    /// Moves the CardDisplay towards the objective
+    /// </summary>
+    /// <param name="objective"></param>
+    private void MoveToObjective(Vector3 objective) {
+        rb.AddForce((objective - transform.position) * cardSpeed);
         Vector3 euler = transform.localEulerAngles;
         euler.x = rb.velocity.y;
         euler.y = -rb.velocity.x;
         transform.localEulerAngles = euler;
     }
 
+    /// <summary>
+    /// Set the cardDisplay position in the board
+    /// </summary>
+    /// <param name="position"></param>
     public void SetPosition(Vector3 position) {
         boardPosition = position;
         moved = true;
     }
 
+    private void OnMouseOver() {
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !mousePressed) {
+            UIController.instance.SetInfoCard(true, GetComponent<CardDisplay>().card);
+        }
+    }
+
     private void OnMouseDown() {
+        UIController.instance.SetInfoCard(false);
         mousePressed = true;
         PlayerHand.instance.RemoveCard(name);
     }
 
     private void OnMouseDrag() {
-        objective = GetWorldPositionOnPlane(Input.mousePosition, 0);
+        mousePostion = UIController.GetWorldPositionOnPlane(Input.mousePosition, transform.position.z);
     }
 
     private void OnMouseUp() {
         mousePressed = false;
         PlayerHand.instance.AddCard(gameObject);
-    }
-
-    public Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z) {
-        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-        Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
-        float distance;
-        xy.Raycast(ray, out distance);
-        return ray.GetPoint(distance);
     }
 }
