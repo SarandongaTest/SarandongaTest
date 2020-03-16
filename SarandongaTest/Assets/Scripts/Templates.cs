@@ -7,7 +7,7 @@ public class Templates : MonoBehaviour {
     public static Templates instance;
     public GameObject cardPrefab;
 
-    void Start() {
+    void Awake() {
         if (instance == null) {
             instance = this;
         } else {

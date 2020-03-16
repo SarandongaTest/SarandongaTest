@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
     private void Start() {
-        UIController.instance.SetBackgroundSize();
-        UIController.instance.SetPlayerHandPosition();
+        //UIController.instance.SetBackgroundSize();
+        //UIController.instance.SetPlayerHandPosition();
 
         while (PlayerHand.instance.hand.Count < 10) {
             GameController.Deal();

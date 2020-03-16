@@ -7,7 +7,9 @@ public class PlayerHand : MonoBehaviour {
 
     public static PlayerHand instance;
     public Dictionary<string, GameObject> hand = new Dictionary<string, GameObject>();
+    private GameObject selected = null;
     public float spacing = 2.5f;
+
     private void Awake() {
         if (instance == null) {
             instance = this;
@@ -21,8 +23,24 @@ public class PlayerHand : MonoBehaviour {
     /// </summary>
     /// <param name="card"></param>
     public void AddCard(GameObject card) {
+        //If there is no card selected, the first one is
+
         hand.Add(card.name, card);
-        SetCardsPositions();
+
+        if (selected == null) {
+            SelectCard(card);
+        }
+        //SetCardsPositions();
+    }
+
+
+    public void SelectCard(GameObject card) {
+        if (selected != null) {
+            selected.GetComponent<CardDisplay>().SetSelected(false);
+        }
+
+        selected = card;
+        card.GetComponent<CardDisplay>().SetSelected(true);
     }
 
     /// <summary>
@@ -31,7 +49,7 @@ public class PlayerHand : MonoBehaviour {
     /// <param name="id"></param>
     public void RemoveCard(string id) {
         hand.Remove(id);
-        SetCardsPositions();
+        //SetCardsPositions();
     }
 
     /// <summary>
