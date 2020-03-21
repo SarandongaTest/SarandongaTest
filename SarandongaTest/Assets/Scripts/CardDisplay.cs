@@ -6,13 +6,9 @@ using UnityEngine.UI;
 
 public class CardDisplay : MonoBehaviour {
 
-    public Card card;
+    public Card card = default;
     public Text cardDescription;
-    private bool selected = false;
-
-    public CardDisplay(Card card) {
-        this.card = card;
-    }
+    internal bool selected = false;
 
     void Awake() {
         if (card != null) {
@@ -40,19 +36,6 @@ public class CardDisplay : MonoBehaviour {
     }
 
     /// <summary>
-    /// Set if the card is the selected one
-    /// </summary>
-    /// <param name="selected"></param>
-    public void SetSelected(bool selected) {
-        if (this.selected == selected)
-            return;
-
-        this.transform.localScale = selected ? new Vector2(1.2f, 1.2f) : Vector2.one;
-        this.gameObject.GetComponent<Image>().color = selected ? new Color(1, 1, 1) : new Color(0.85f, 0.85f, 0.85f);
-        this.selected = selected;
-    }
-
-    /// <summary>
     /// Instanciate a CardDisplay GameObject
     /// </summary>
     /// <param name="card"></param>
@@ -63,9 +46,5 @@ public class CardDisplay : MonoBehaviour {
         return Instantiate(
             cardPrefab.GetComponent<CardDisplay>().SetCard(card),
             parent.transform);
-    }
-
-    public void CardClicked() {
-        PlayerHand.instance.SelectCard(this.gameObject);
     }
 }

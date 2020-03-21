@@ -36,11 +36,19 @@ public class PlayerHand : MonoBehaviour {
 
     public void SelectCard(GameObject card) {
         if (selected != null) {
-            selected.GetComponent<CardDisplay>().SetSelected(false);
+            selected.GetComponent<WhiteCardDisplay>().SetSelected(false);
         }
 
         selected = card;
-        card.GetComponent<CardDisplay>().SetSelected(true);
+        card.GetComponent<WhiteCardDisplay>().SetSelected(true);
+    }
+
+
+    public void PlayCard() {
+        RemoveCard(selected.name);
+        Destroy(selected);
+        GameController.Deal();
+        SelectCard(transform.GetChild(0).gameObject);
     }
 
     /// <summary>

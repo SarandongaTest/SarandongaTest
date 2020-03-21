@@ -16,4 +16,8 @@ public class PhoneButtonsController : MonoBehaviour
     public void CloseApp() {
         Application.Quit();
     }
+
+    public void PlayCard() {
+        PlayerHand.instance.PlayCard();
+    }
 }
