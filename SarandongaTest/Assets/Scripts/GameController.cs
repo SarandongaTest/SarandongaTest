@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour {
     /// </summary>
     public static void Deal() {
         PlayerHand.instance.AddCard(
-                        CardDisplay.InstanciateCardDisplay(Card.CardFromJSON(CardFileInterface.RandomLine()),
+                        CardDisplay.InstanciateCardDisplay(CardJSONInterface.BuildFromJSON<WhiteCard>(JSONFileInterface.RandomLine(JSONPaths.path + JSONPaths.whitePath)),
                         Templates.instance.cardPrefab,
                         PlayerHand.instance.gameObject));
     }

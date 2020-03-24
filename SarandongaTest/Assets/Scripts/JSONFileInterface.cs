@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class CardFileInterface : MonoBehaviour {
+public class JSONFileInterface : MonoBehaviour {
     
-    public static CardFileInterface instance;
-    private const string fileName = "/JSONFiles/Cards.json";
+    public static JSONFileInterface instance;
 
     private void Start() {
         if (instance == null) {
@@ -20,7 +19,12 @@ public class CardFileInterface : MonoBehaviour {
     /// Reads all the lines on the JSON file
     /// </summary>
     /// <returns></returns>
-    public static string[] ReadAllLines() {
+    public static string[] ReadAllLines(string fileName) {
+        /*DirectoryInfo info = new DirectoryInfo(Application.dataPath + JSONPaths.path);
+        var infoDir = info.GetDirectories();
+        foreach (string file in Directory.GetDirectories(Application.dataPath + JSONPaths.path)) {
+            Debug.Log(file);
+        }*/
         return File.ReadAllLines(Application.dataPath + fileName);
     }
 
@@ -28,16 +32,16 @@ public class CardFileInterface : MonoBehaviour {
     /// Adds the Card information to the end of the file
     /// </summary>
     /// <param name="card"></param>
-    public static void AppendLine(Card card) {
+    /*public static void AppendLine(Card card) {
         File.AppendAllText(Application.dataPath + fileName, "\r\n" + JsonUtility.ToJson(card));
-    }
+    }*/
 
     /// <summary>
     /// Return a random line from the JSON file
     /// </summary>
     /// <returns></returns>
-    public static string RandomLine() {
-        string[] cards = ReadAllLines();
+    public static string RandomLine(string fileName) {
+        string[] cards = ReadAllLines(fileName);
         return cards[Random.Range(0, cards.Length)];
     }
 

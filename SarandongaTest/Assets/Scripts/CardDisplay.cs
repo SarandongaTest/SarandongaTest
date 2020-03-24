@@ -32,7 +32,7 @@ public class CardDisplay : MonoBehaviour {
     /// </summary>
     public void SetDisplays() {
         name = card.name + GetInstanceID();
-        cardDescription.text = card.description;
+        cardDescription.text = card.text;
     }
 
     /// <summary>
