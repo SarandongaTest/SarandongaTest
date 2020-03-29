@@ -5,9 +5,12 @@ using UnityEngine;
 public class Templates : MonoBehaviour {
 
     public static Templates instance;
-    public GameObject cardPrefab;
+    public GameObject whiteCardPrefab;
+    public GameObject blackCardPrefab;
+    public GameObject DeckSelectorPrefab;
 
-    void Start() {
+
+    void Awake() {
         if (instance == null) {
             instance = this;
         } else {

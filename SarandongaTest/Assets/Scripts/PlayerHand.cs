@@ -7,7 +7,9 @@ public class PlayerHand : MonoBehaviour {
 
     public static PlayerHand instance;
     public Dictionary<string, GameObject> hand = new Dictionary<string, GameObject>();
+    private GameObject selected = null;
     public float spacing = 2.5f;
+
     private void Awake() {
         if (instance == null) {
             instance = this;
@@ -22,7 +24,10 @@ public class PlayerHand : MonoBehaviour {
     /// <param name="card"></param>
     public void AddCard(GameObject card) {
         hand.Add(card.name, card);
-        SetCardsPositions();
+        
+        if (selected == null) {
+            SelectCard(card);
+        }
     }
 
     /// <summary>
@@ -31,18 +36,20 @@ public class PlayerHand : MonoBehaviour {
     /// <param name="id"></param>
     public void RemoveCard(string id) {
         hand.Remove(id);
-        SetCardsPositions();
     }
 
-    /// <summary>
-    /// Set the position of all the cards
-    /// </summary>
-    private void SetCardsPositions() {
-        int i = 0;
-        foreach (string id in hand.Keys) {
-            Vector3 position = new Vector3(spacing * i - spacing * (hand.Count - 1) / 2, 0, transform.position.z);
-            hand[id].GetComponent<CardMovement>().SetPosition(transform.position + position);
-            i++;
-        }
+    public void SelectCard(GameObject card) {
+        if (selected != null)
+            selected.GetComponent<CardDisplayWhite>().SetSelected(false);
+
+        selected = card;
+        card.GetComponent<CardDisplayWhite>().SetSelected(true);
+    }
+
+    public void PlayCard() {
+        RemoveCard(selected.name);
+        Destroy(selected);
+        GameController.Deal();
+        SelectCard(transform.GetChild(0).gameObject);
     }
 }

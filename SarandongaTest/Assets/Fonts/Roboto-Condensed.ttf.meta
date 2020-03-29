@@ -3,8 +3,8 @@ guid: 65fec71de5c22d644a93458a75db8fbc
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 16
-  forceTextureCase: -2
+  fontSize: 160
+  forceTextureCase: -1
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
@@ -13,7 +13,7 @@ TrueTypeFontImporter:
   - Roboto
   fallbackFontReferences:
   - {fileID: 12800000, guid: 7d056db604167564e9974ce7b1063750, type: 3}
-  - {fileID: 12800000, guid: 476d65ea3ab484b4080ef4cfedaf76a7, type: 3}
+  - {instanceID: 0}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

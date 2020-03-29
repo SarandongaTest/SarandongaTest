@@ -4,7 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Card{
-    
+public class CardWhite {
+
     public string text;
+
+    public CardWhite(string text) {
+        this.text = text;
+    }
 }
