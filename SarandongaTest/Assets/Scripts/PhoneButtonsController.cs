@@ -10,6 +10,7 @@ public class PhoneButtonsController : MonoBehaviour
     }
 
     public void LoadPhoneScene() {
+        MenuController.instance.LoadDecks();
         SceneManager.LoadScene("PhoneScene");
     }
 
@@ -19,5 +20,10 @@ public class PhoneButtonsController : MonoBehaviour
 
     public void PlayCard() {
         PlayerHand.instance.PlayCard();
+    }
+
+    public void ParseDeck() {
+        DeckParser deckParser = JSONObjectInterface.BuildFromJSON<DeckParser>(JSONFileInterface.RandomLine("Base/original.json"));
+        deckParser.StoreDeck();
     }
 }

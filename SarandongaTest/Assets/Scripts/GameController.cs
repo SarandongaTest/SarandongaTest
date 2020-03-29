@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    private void Start() {
-        //UIController.instance.SetBackgroundSize();
-        //UIController.instance.SetPlayerHandPosition();
+    public static GameController instance;
+    public static Deck deck;
 
-        while (PlayerHand.instance.hand.Count < 10) {
-            GameController.Deal();
-        }
+    public GameObject blackCard;
+
+    private void Awake() {
+        instance = this;
     }
-    
+
+    private void Start() {
+        /*deck = JSONObjectInterface.BuildFromJSON<Deck>(JSONFileInterface.RandomLine("Base/" + JSONPaths.fileName));
+        */
+        while (PlayerHand.instance.hand.Count < 10) {
+            Deal();
+        }
+
+        blackCard.GetComponent<CardDisplayBlack>().SetCard(deck.DealBlackCard());
+    }
+
     /// <summary>
     /// Instanciate a CardDisplay from a random JSON representation
     /// </summary>
     public static void Deal() {
         PlayerHand.instance.AddCard(
-                        CardDisplay.InstanciateCardDisplay(CardJSONInterface.BuildFromJSON<WhiteCard>(JSONFileInterface.RandomLine(JSONPaths.path + JSONPaths.whitePath)),
-                        Templates.instance.cardPrefab,
-                        PlayerHand.instance.gameObject));
+            CardDisplayWhite.InstanciateCardDisplay(deck.DealCard(),
+            Templates.instance.whiteCardPrefab,
+            PlayerHand.instance.gameObject));
     }
 }

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Card{
-    
+public class CardBlack {
+
     public string text;
+    public int pick = 1;
 }

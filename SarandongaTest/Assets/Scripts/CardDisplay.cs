@@ -4,47 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardDisplay : MonoBehaviour {
+public abstract class CardDisplay : MonoBehaviour {
 
-    public Card card = default;
     public Text cardDescription;
-    internal bool selected = false;
 
-    void Awake() {
-        if (card != null) {
-            SetDisplays();
-        }
+    private void Awake() {
+        this.name = GetInstanceID().ToString();
     }
 
-    /// <summary>
-    /// Set the card information and update the display
-    /// </summary>
-    /// <param name="card"></param>
-    /// <returns></returns>
-    public GameObject SetCard(Card card) {
-        this.card = card;
-        SetDisplays();
-        return this.gameObject;
-    }
-
-    /// <summary>
-    /// Update the display
-    /// </summary>
-    public void SetDisplays() {
-        name = card.name + GetInstanceID();
-        cardDescription.text = card.text;
-    }
-
-    /// <summary>
-    /// Instanciate a CardDisplay GameObject
-    /// </summary>
-    /// <param name="card"></param>
-    /// <param name="cardPrefab"></param>
-    /// <param name="parent"></param>
-    /// <returns></returns>
-    public static GameObject InstanciateCardDisplay(Card card, GameObject cardPrefab, GameObject parent) {
-        return Instantiate(
-            cardPrefab.GetComponent<CardDisplay>().SetCard(card),
-            parent.transform);
-    }
+    public abstract void SetDisplays();
 }
