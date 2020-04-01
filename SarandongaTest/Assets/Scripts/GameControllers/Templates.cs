@@ -8,7 +8,7 @@ public class Templates : MonoBehaviour {
     public GameObject whiteCardPrefab;
     public GameObject blackCardPrefab;
     public GameObject DeckSelectorPrefab;
-
+    public static Deck deck;
 
     void Awake() {
         if (instance == null) {

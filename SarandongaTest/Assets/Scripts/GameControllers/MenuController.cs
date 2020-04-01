@@ -36,6 +36,6 @@ public class MenuController : MonoBehaviour {
             }
         }
 
-        GameController.deck = new Deck(decks);
+        Templates.deck = new Deck(decks);
     }
 }

@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Card
-  - Board
+  - BlackCard
   layers:
   - Default
   - TransparentFX

@@ -13,8 +13,6 @@ public class PlayerHand : MonoBehaviour {
     private void Awake() {
         if (instance == null) {
             instance = this;
-        } else {
-            Destroy(this.gameObject);
         }
     }
 
@@ -24,7 +22,7 @@ public class PlayerHand : MonoBehaviour {
     /// <param name="card"></param>
     public void AddCard(GameObject card) {
         hand.Add(card.name, card);
-        
+
         if (selected == null) {
             SelectCard(card);
         }
@@ -47,9 +45,9 @@ public class PlayerHand : MonoBehaviour {
     }
 
     public void PlayCard() {
-        RemoveCard(selected.name);
+        /*RemoveCard(selected.name);
         Destroy(selected);
         GameController.Deal();
-        SelectCard(transform.GetChild(0).gameObject);
+        SelectCard(transform.GetChild(0).gameObject);*/
     }
 }
