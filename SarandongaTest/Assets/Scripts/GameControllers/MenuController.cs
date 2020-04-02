@@ -35,7 +35,6 @@ public class MenuController : MonoBehaviour {
                         child.GetComponentInChildren<Text>().text + "/" + JSONPaths.fileName)));
             }
         }
-
         Templates.deck = new Deck(decks);
     }
 }

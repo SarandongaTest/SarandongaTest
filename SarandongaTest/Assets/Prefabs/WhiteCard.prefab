@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardDescription: {fileID: 5812567695024304690}
   card:
-    text: Puberty.
+    text: Justin Bieber.
 --- !u!1 &5812567695024304692
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,4 +221,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Puberty.
+  m_Text: Justin Bieber.

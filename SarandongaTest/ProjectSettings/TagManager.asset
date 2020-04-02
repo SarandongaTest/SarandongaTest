@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Card
   - BlackCard
+  - DecideBoard
   layers:
   - Default
   - TransparentFX
