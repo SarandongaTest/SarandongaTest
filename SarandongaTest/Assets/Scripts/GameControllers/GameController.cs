@@ -13,10 +13,10 @@ public class GameController : NetworkBehaviour {
     private NetworkIdentity netid;
 
     private void Awake() {
-        instance = this;
     }
 
     public void Start() {
+        instance = this;
         if (!isLocalPlayer) {
             gameObject.SetActive(false);
             return;
@@ -75,12 +75,19 @@ public class GameController : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcSetSelectPlayer(NetworkIdentity target, string[] cards) {
-        PlayerHand.instance.SelectCardTurn(true, cards);
+        PlayerHand.instance.PlayCardTurn(false, cards);
         if (target.netId != GetComponent<NetworkIdentity>().netId) {
+            //Apagar el botón
             return;
         } else {
-
+            //Cambiar el botón
         }
+    }
+
+    [ClientRpc]
+    public void RpcPlayNewHand(NetworkIdentity id) {
+        PlayerHand.instance.PlayCardTurn(true, null);
+        //Volver a la normalidad
     }
 
 }

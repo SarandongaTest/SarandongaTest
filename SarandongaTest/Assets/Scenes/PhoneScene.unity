@@ -238,7 +238,6 @@ GameObject:
   - component: {fileID: 34130299}
   - component: {fileID: 34130298}
   - component: {fileID: 34130297}
-  - component: {fileID: 34130300}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -309,7 +308,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 34130300}
+      - m_Target: {fileID: 561299261}
         m_MethodName: LoadMainMenu
         m_Mode: 1
         m_Arguments:
@@ -356,18 +355,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34130295}
   m_CullTransparentMesh: 0
---- !u!114 &34130300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 34130295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fe974cc595a6fe4da8b7cd4e5481558, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &76664739
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +639,7 @@ MonoBehaviour:
   blackCard:
     text: 
     pick: 1
+  selectingCard: 0
 --- !u!114 &409069800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -711,7 +699,6 @@ GameObject:
   - component: {fileID: 460691404}
   - component: {fileID: 460691403}
   - component: {fileID: 460691402}
-  - component: {fileID: 460691405}
   m_Layer: 5
   m_Name: DiscardButton
   m_TagString: Untagged
@@ -781,7 +768,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 460691403}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 561299256}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &460691403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,18 +816,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460691400}
   m_CullTransparentMesh: 0
---- !u!114 &460691405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 460691400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fe974cc595a6fe4da8b7cd4e5481558, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &467107386
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,10 +901,9 @@ GameObject:
   - component: {fileID: 491769471}
   - component: {fileID: 491769470}
   - component: {fileID: 491769469}
-  - component: {fileID: 491769472}
   m_Layer: 5
   m_Name: PlayButton
-  m_TagString: Untagged
+  m_TagString: PlayButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -986,7 +971,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 491769472}
+      - m_Target: {fileID: 561299261}
         m_MethodName: PlayCard
         m_Mode: 1
         m_Arguments:
@@ -1033,18 +1018,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491769467}
   m_CullTransparentMesh: 0
---- !u!114 &491769472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491769467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fe974cc595a6fe4da8b7cd4e5481558, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &534763511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,6 +1066,7 @@ GameObject:
   - component: {fileID: 561299260}
   - component: {fileID: 561299259}
   - component: {fileID: 561299258}
+  - component: {fileID: 561299261}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -1183,6 +1157,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 561299256}
   m_CullTransparentMesh: 0
+--- !u!114 &561299261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561299256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe974cc595a6fe4da8b7cd4e5481558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayButton: {fileID: 491769467}
+  DecideButton: {fileID: 1454359815}
 --- !u!1 &718015611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,10 +1870,9 @@ GameObject:
   - component: {fileID: 1454359819}
   - component: {fileID: 1454359818}
   - component: {fileID: 1454359817}
-  - component: {fileID: 1454359820}
   m_Layer: 5
-  m_Name: Button
-  m_TagString: Untagged
+  m_Name: DecideButton
+  m_TagString: DecideButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1952,7 +1939,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1454359818}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 561299261}
+        m_MethodName: DecideCard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1454359818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1989,18 +1987,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454359815}
   m_CullTransparentMesh: 0
---- !u!114 &1454359820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1454359815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fe974cc595a6fe4da8b7cd4e5481558, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1520322320
 GameObject:
   m_ObjectHideFlags: 0
@@ -2139,7 +2125,7 @@ GameObject:
   - component: {fileID: 1723080199}
   - component: {fileID: 1723080198}
   m_Layer: 5
-  m_Name: Text
+  m_Name: DecideButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2195,7 +2181,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Select Winner
 --- !u!222 &1723080199
 CanvasRenderer:
   m_ObjectHideFlags: 0

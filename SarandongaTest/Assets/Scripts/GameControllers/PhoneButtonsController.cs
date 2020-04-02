@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PhoneButtonsController : MonoBehaviour
-{
+public class PhoneButtonsController : MonoBehaviour {
+
+    public static PhoneButtonsController instance;
+    public GameObject PlayButton;
+    public GameObject DecideButton;
+
+    private void Awake() {
+        instance = this;
+    }
+
     public void LoadMainMenu() {
         SceneManager.LoadScene("Menu");
     }
 
     public void LoadPhoneScene() {
         MenuController.instance.LoadDecks();
-        SceneManager.LoadScene("PhoneScene");
+        //SceneManager.LoadScene("PhoneScene");
     }
 
     public void CloseApp() {
@@ -22,8 +30,18 @@ public class PhoneButtonsController : MonoBehaviour
         PlayerHand.instance.PlayCard();
     }
 
-    public void ParseDeck() {
+    public void DecideCard() {
+        PlayerHand.instance.DecideCard();
+    }
+
+    public static void ParseDeck() {
         DeckParser deckParser = JSONObjectInterface.BuildFromJSON<DeckParser>(JSONFileInterface.RandomLine("Base/original.json"));
         deckParser.StoreDeck();
     }
+
+    public void SetPlayButtons(bool playing) {
+        PlayButton.SetActive(playing);
+        DecideButton.SetActive(!playing);
+    }
+
 }

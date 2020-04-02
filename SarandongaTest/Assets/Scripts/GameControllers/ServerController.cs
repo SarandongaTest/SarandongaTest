@@ -39,13 +39,18 @@ public class ServerController : NetworkBehaviour {
     }
 
     public void PlayCard(NetworkIdentity id, string card) {
-        if (selectingCard) {
-            NetworkIdentity winner;
-            currentHand.TryGetValue(card, out winner);
-        }
-        currentHand.Add(card, id);
-        if (currentHand.Count >= players.Count) {
-            ManageSelectCard();
+        if (selectingCard && id.netId == players[selector].netId) {
+            currentHand.TryGetValue(card, out NetworkIdentity winner);
+            selector++;
+            selector %= players.Count;
+            GameController.instance.RpcPlayNewHand(winner);
+            currentHand.Clear();
+            selectingCard = false;
+        } else {
+            currentHand.Add(card, id);
+            if (currentHand.Count >= players.Count) {
+                ManageSelectCard();
+            }
         }
     }
 
@@ -54,8 +59,6 @@ public class ServerController : NetworkBehaviour {
         currentHand.Keys.CopyTo(cards, 0);
         selectingCard = true;
         GameController.instance.RpcSetSelectPlayer(players[selector], cards);
-        selector++;
-        selector %=  players.Count;
     }
 
     public void GetBlackCard() {

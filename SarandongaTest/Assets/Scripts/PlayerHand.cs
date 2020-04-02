@@ -53,11 +53,12 @@ public class PlayerHand : MonoBehaviour {
         card.GetComponent<CardDisplayWhite>().SetSelected(true);
     }
 
-    public void SelectCardTurn(bool selectCardTurn, string[] cards) {
+    public void PlayCardTurn(bool playCardTurn, string[] cards) {
+        PhoneButtonsController.instance.SetPlayButtons(playCardTurn);
         foreach (GameObject card in hand) {
-            card.SetActive(!selectCardTurn);
+            card.SetActive(playCardTurn);
         }
-        if (selectCardTurn) {
+        if (!playCardTurn) {
             foreach (string cardToDecide in cards) {
                 cardsToDecide.Add(CardDisplayWhite.InstanciateCardDisplay(
                     JSONObjectInterface.BuildFromJSON<CardWhite>(cardToDecide),
@@ -78,6 +79,10 @@ public class PlayerHand : MonoBehaviour {
         RemoveCard(selected);
         GameController.instance.SendCard(selected);
         Destroy(selected);
-        SelectCard(transform.GetChild(0).gameObject);
+    }
+
+    public void DecideCard() {
+        GameController.instance.SendCard(selected);
+
     }
 }
