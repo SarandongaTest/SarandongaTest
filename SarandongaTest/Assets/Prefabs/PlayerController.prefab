@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackCard: {fileID: 0}
+  decideBoard: {fileID: 0}
 --- !u!114 &8452881920271891914
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class CustomNetworkManager : NetworkManager {
 
     public override void OnStartServer() {
-        MenuController.instance.LoadDecks();
+        MenuController.LoadDecks();
         base.OnStartServer();
     }
     

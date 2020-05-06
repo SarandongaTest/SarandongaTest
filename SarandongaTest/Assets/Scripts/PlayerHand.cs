@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour {
 
+    //public Rect radarScreen = new Rect(Screen.width * 0.86f, Screen.height * 0.01f, 180, 385);
+    public Vector2 scrollPosition = Vector2.zero;
+
     public static PlayerHand instance;
 
     public List<GameObject> hand = new List<GameObject>();
@@ -85,4 +88,21 @@ public class PlayerHand : MonoBehaviour {
         GameController.instance.SendCard(selected);
 
     }
+
+    /*void OnGUI() {
+        //Create your window. Size you know.
+        //radarScreen = GUI.Window(1, radarScreen, DrawRadarList, "Hand");
+    }
+    void DrawRadarList(int WindowID) {
+        //Create scroll list. For example, 1 line have size 200x60
+        //About parameters: 1 - rectangle of view, 2 - position scroll, 3 - rectangle of full list
+        scrollPosition = GUI.BeginScrollView(new Rect(0, 0, radarScreen.width, radarScreen.height), scrollPosition, new Rect(0, 0, radarScreen.width, 60 * hand.Count));
+        for (int i = 0; i < hand.Count; i++) {
+            //For example, show name object
+            GUI.Label(new Rect(0, 60 * i, radarScreen.width, 60), hand[i].GetComponent<CardDisplayWhite>().cardDescription.text);
+
+        }
+            GUI.EndScrollView();
+            GUI.DragWindow(new Rect(0, 0, 180, 20));
+    }*/
 }

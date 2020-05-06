@@ -10,45 +10,55 @@ public class GameController : NetworkBehaviour {
 
     public GameObject blackCard;
     public GameObject decideBoard;
-    private NetworkIdentity netid;
+    private NetworkIdentity id;
 
     private void Awake() {
+        this.name = Time.time + "";
     }
 
     public void Start() {
-        instance = this;
-        if (!isLocalPlayer) {
-            gameObject.SetActive(false);
-            return;
+        if (isLocalPlayer) {
+            name += "Local";
+            instance = this;
+            CmdGetBlackCard();
+            CmdAddPlayer();
+            CmdAskForDeal(PlayerHand.maxCards);
         }
-        netid = GetComponent<NetworkIdentity>();
-        CmdAddPlayer(netid);
         blackCard = GameObject.FindGameObjectWithTag("BlackCard");
-        CmdGetBlackCard();
-        CmdDeal(netid, PlayerHand.maxCards - PlayerHand.instance.hand.Count);
+
+    }
+
+    public override void OnStartServer() {
+        base.OnStartServer();
+        id = GetComponent<NetworkIdentity>();
+    }
+
+    [Command]
+    private void CmdAddPlayer() {
+        Debug.Log(this.name + "- Register with id: " + id.netId);
+        //Debug.Log("CmdAddPlayer " + isLocalPlayer + " " + id);
+        ServerController.instance.AddPlayer(id, this.gameObject);
     }
 
     public void SendCard(GameObject card) {
-        CmdDeal(netid, PlayerHand.maxCards - PlayerHand.instance.hand.Count);
-        CmdSendCard(netid, JSONObjectInterface.BuildJSON(card.GetComponent<CardDisplayWhite>().card));
+        //if (!isLocalPlayer) return;
+        CmdAskForDeal(PlayerHand.maxCards - PlayerHand.instance.hand.Count);
+        CmdSendCard(JSONObjectInterface.BuildJSON(card.GetComponent<CardDisplayWhite>().card));
     }
 
     [Command]
-    private void CmdSendCard(NetworkIdentity id, string card) {
+    private void CmdSendCard(string card) {
+        //Debug.Log("CmdSendCard " + isLocalPlayer + " " + id + " " + serverID);
         ServerController.instance.PlayCard(id, card);
-    }
-
-    [Command]
-    private void CmdAddPlayer(NetworkIdentity id) {
-        ServerController.instance.AddPlayer(id);
     }
 
     /// <summary>
     /// Instanciate a CardDisplay from a random JSON representation
     /// </summary>
     [Command]
-    private void CmdDeal(NetworkIdentity id, int count) {
-        ServerController.instance.DealCard(id, count);
+    private void CmdAskForDeal(int count) {
+        Debug.Log("CmdAskForDeal: " + name + " " + count);
+        /*ReceiveCards(*/ServerController.instance.DealCard(id, count)/*)*/;
     }
 
     [Command]
@@ -56,15 +66,28 @@ public class GameController : NetworkBehaviour {
         ServerController.instance.GetBlackCard();
     }
 
-
     [ClientRpc]
-    public void RpcGetCard(NetworkIdentity target, string[] cards) {
-        if (target.netId != netId) {
-            return;
-        }
-        
+    public void RpcReceiveCards(string[] cards) {
+        Debug.Log("ReceiveCards: "+ isLocalPlayer);
+        if (!isLocalPlayer) return;
+
+        Debug.Log("ReceiveCards " + name + " " + isLocalPlayer + " " + cards.Length);
+
+        /***************************************************************************************/
+        PlayerHand.instance.AddCard(CardDisplayWhite.InstanciateCardDisplay(JSONObjectInterface.BuildFromJSON<CardWhite>(
+            "{\"text\":\"RPCDEALCARD C" + cards.Length + " H" + PlayerHand.instance.hand.Count +" \"}"), PlayerHand.instance.gameObject));
+        /***************************************************************************************/
+
         foreach (string card in cards) {
             PlayerHand.instance.AddCard(JSONObjectInterface.BuildFromJSON<CardWhite>(card));
+        }
+
+        if (PlayerHand.instance.hand.Count < PlayerHand.maxCards) {
+            CmdAskForDeal(PlayerHand.maxCards - PlayerHand.instance.hand.Count);
+            /***************************************************************************************
+            PlayerHand.instance.AddCard(CardDisplayWhite.InstanciateCardDisplay(JSONObjectInterface.BuildFromJSON<CardWhite>(
+                "{\"text\":\"RPCDEALCARD2 T" + target + " ID" + serverID + " C" + cards.Length + " H" + PlayerHand.instance.hand.Count + " MAX" + PlayerHand.maxCards +" \"}"), PlayerHand.instance.gameObject));
+            /***************************************************************************************/
         }
     }
 
@@ -73,19 +96,16 @@ public class GameController : NetworkBehaviour {
         blackCard.GetComponent<CardDisplayBlack>().SetCard(JSONObjectInterface.BuildFromJSON<CardBlack>(card));
     }
 
-    [ClientRpc]
-    public void RpcSetSelectPlayer(NetworkIdentity target, string[] cards) {
+    [Client]
+    public void SetSelectPlayer(string[] cards) {
+        //Debug.Log("RpcSetSelectPlayer " + isLocalPlayer + " " + target + " " + serverID);
         PlayerHand.instance.PlayCardTurn(false, cards);
-        if (target.netId != GetComponent<NetworkIdentity>().netId) {
-            //Apagar el botón
-            return;
-        } else {
-            //Cambiar el botón
-        }
+        //DO THE THING
     }
 
     [ClientRpc]
     public void RpcPlayNewHand(NetworkIdentity id) {
+        //Debug.Log("RpcPlayNewHand "/* + isLocalPlayer + " " + id.netId + " " + networkIdentity.netId*/);
         PlayerHand.instance.PlayCardTurn(true, null);
         //Volver a la normalidad
     }

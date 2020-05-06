@@ -367,6 +367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe974cc595a6fe4da8b7cd4e5481558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayButton: {fileID: 0}
+  DecideButton: {fileID: 0}
 --- !u!1 &76664739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,6 +1057,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe974cc595a6fe4da8b7cd4e5481558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayButton: {fileID: 0}
+  DecideButton: {fileID: 0}
 --- !u!114 &841742362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1637,6 +1641,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe974cc595a6fe4da8b7cd4e5481558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayButton: {fileID: 0}
+  DecideButton: {fileID: 0}
 --- !u!114 &1591311829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,7 +1814,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1188831467}
   m_HandleRect: {fileID: 1188831466}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

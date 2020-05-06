@@ -18,7 +18,7 @@ public class PhoneButtonsController : MonoBehaviour {
     }
 
     public void LoadPhoneScene() {
-        MenuController.instance.LoadDecks();
+        MenuController.LoadDecks();
         //SceneManager.LoadScene("PhoneScene");
     }
 

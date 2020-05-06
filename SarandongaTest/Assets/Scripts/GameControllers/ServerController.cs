@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 #pragma warning disable CS0618 // El tipo o el miembro están obsoletos
 public class ServerController : NetworkBehaviour {
-    public static List<NetworkIdentity> players = new List<NetworkIdentity>();
+    public static Dictionary<NetworkIdentity, GameObject> players = new Dictionary<NetworkIdentity, GameObject>();
     private Dictionary<string, NetworkIdentity> currentHand = new Dictionary<string, NetworkIdentity>();
-    private int selector = 0;
+    private NetworkIdentity selector;
 
     public static ServerController instance;
     public Deck deck;
@@ -25,25 +25,29 @@ public class ServerController : NetworkBehaviour {
         blackCard = deck.DealBlackCard();
     }
 
-    public void AddPlayer(NetworkIdentity id) {
-        players.Add(id);
+    public void AddPlayer(NetworkIdentity id, GameObject go) {
+        players.Add(id, go);
+        if (selector == null)
+            selector = id;
     }
 
-    public void DealCard(NetworkIdentity id, int count) {
+    public string[] DealCard(NetworkIdentity id, int count) {
         List<string> cards = new List<string>();
         for (int i = 0; i < count; i++) {
             cards.Add(JSONObjectInterface.BuildJSON<CardWhite>(deck.DealCard()));
         }
 
-        GameController.instance.RpcGetCard(id, cards.ToArray());
+        players.TryGetValue(id, out GameObject player);
+        player.GetComponent<GameController>().RpcReceiveCards(cards.ToArray());
+        Debug.Log(player.name);
+        return cards.ToArray();
     }
 
     public void PlayCard(NetworkIdentity id, string card) {
-        if (selectingCard && id.netId == players[selector].netId) {
+        if (selectingCard && id.netId == selector.netId) {
             currentHand.TryGetValue(card, out NetworkIdentity winner);
-            selector++;
-            selector %= players.Count;
-            GameController.instance.RpcPlayNewHand(winner);
+            selector = winner;
+            GameController.instance.RpcPlayNewHand(selector);
             currentHand.Clear();
             selectingCard = false;
         } else {
@@ -55,10 +59,11 @@ public class ServerController : NetworkBehaviour {
     }
 
     private void ManageSelectCard() {
+        selectingCard = true;
         string[] cards = new string[currentHand.Count];
         currentHand.Keys.CopyTo(cards, 0);
-        selectingCard = true;
-        GameController.instance.RpcSetSelectPlayer(players[selector], cards);
+        players.TryGetValue(selector, out GameObject player);
+        player.GetComponent<GameController>().SetSelectPlayer(cards);
     }
 
     public void GetBlackCard() {

@@ -14,27 +14,27 @@ public class MenuController : MonoBehaviour {
     }
 
     void Start() {
-        string[] deckDirectories = Directory.GetDirectories(Application.dataPath + JSONPaths.path);
-        foreach (string directory in deckDirectories) {
-            GameObject selector = Instantiate(Templates.instance.DeckSelectorPrefab, deckList.transform);
+        foreach (string directory in Directory.GetDirectories(Application.dataPath + JSONPaths.path)) {
+            GameObject deckItem = Instantiate(Templates.instance.DeckSelectorPrefab, deckList.transform);
             if (directory.Contains("Base"))
-                selector.GetComponent<Toggle>().isOn = true;
+                deckItem.GetComponent<Toggle>().isOn = true;
 
-            selector.GetComponentInChildren<Text>().text = directory.Substring(directory.LastIndexOf("/") + 1);
+            deckItem.GetComponentInChildren<Text>().text = directory.Substring(directory.LastIndexOf("/") + 1);
         }
     }
 
 
-    public void LoadDecks() {
+    public static void LoadDecks() {
         List<Deck> decks = new List<Deck>();
-        for (int i = 0; i < deckList.transform.childCount; i++) {
-            Transform child = deckList.transform.GetChild(i);
+        for (int i = 0; i < instance.deckList.transform.childCount; i++) {
+            Transform child = instance.deckList.transform.GetChild(i);
             if (child.GetComponent<Toggle>().isOn) {
                 decks.Add(JSONObjectInterface.BuildFromJSON<Deck>(
-                    JSONFileInterface.RandomLine(
-                        child.GetComponentInChildren<Text>().text + "/" + JSONPaths.fileName)));
+                JSONFileInterface.RandomLine(
+                    child.GetComponentInChildren<Text>().text + "/" + JSONPaths.fileName)));
             }
         }
+        decks.Add(JSONObjectInterface.BuildFromJSON<Deck>(Templates.temp));
         Templates.deck = new Deck(decks);
     }
 }
