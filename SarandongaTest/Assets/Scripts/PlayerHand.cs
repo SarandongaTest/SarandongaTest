@@ -56,11 +56,29 @@ public class PlayerHand : MonoBehaviour {
         card.GetComponent<CardDisplayWhite>().SetSelected(true);
     }
 
-    public void PlayCardTurn(bool playCardTurn, string[] cards) {
+    public void PlayCardTurn(bool playCardTurn) {
         PhoneButtonsController.instance.SetPlayButtons(playCardTurn);
         foreach (GameObject card in hand) {
             card.SetActive(playCardTurn);
         }
+        if (playCardTurn) {
+            //SelectCard(cardsToDecide[0]);
+            foreach (GameObject cardGameObject in cardsToDecide) {
+                Destroy(cardGameObject);
+            }
+            cardsToDecide.Clear();
+            SelectCard(hand[0]);
+        }
+    }
+
+    public void AddSelectionCard(string card) {
+        cardsToDecide.Add(CardDisplayWhite.InstanciateCardDisplay(
+            JSONObjectInterface.BuildFromJSON<CardWhite>(card),
+            gameObject));
+    }
+
+    /*public void PlayCardTurn(bool playCardTurn, string[] cards) {
+        //PhoneButtonsController.instance.SetPlayButtons(playCardTurn);
         if (!playCardTurn) {
             foreach (string cardToDecide in cards) {
                 cardsToDecide.Add(CardDisplayWhite.InstanciateCardDisplay(
@@ -76,9 +94,10 @@ public class PlayerHand : MonoBehaviour {
             SelectCard(hand[0]);
         }
 
-    }
+    }*/
 
     public void PlayCard() {
+        PhoneButtonsController.instance.SetPlayInactive();
         RemoveCard(selected);
         GameController.instance.SendCard(selected);
         Destroy(selected);
@@ -88,21 +107,4 @@ public class PlayerHand : MonoBehaviour {
         GameController.instance.SendCard(selected);
 
     }
-
-    /*void OnGUI() {
-        //Create your window. Size you know.
-        //radarScreen = GUI.Window(1, radarScreen, DrawRadarList, "Hand");
-    }
-    void DrawRadarList(int WindowID) {
-        //Create scroll list. For example, 1 line have size 200x60
-        //About parameters: 1 - rectangle of view, 2 - position scroll, 3 - rectangle of full list
-        scrollPosition = GUI.BeginScrollView(new Rect(0, 0, radarScreen.width, radarScreen.height), scrollPosition, new Rect(0, 0, radarScreen.width, 60 * hand.Count));
-        for (int i = 0; i < hand.Count; i++) {
-            //For example, show name object
-            GUI.Label(new Rect(0, 60 * i, radarScreen.width, 60), hand[i].GetComponent<CardDisplayWhite>().cardDescription.text);
-
-        }
-            GUI.EndScrollView();
-            GUI.DragWindow(new Rect(0, 0, 180, 20));
-    }*/
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PhoneButtonsController : MonoBehaviour {
 
@@ -40,8 +41,18 @@ public class PhoneButtonsController : MonoBehaviour {
     }
 
     public void SetPlayButtons(bool playing) {
+        PlayButton.GetComponent<Button>().interactable = playing;
         PlayButton.SetActive(playing);
+        DecideButton.GetComponent<Button>().interactable = playing;
         DecideButton.SetActive(!playing);
+    }
+
+    public void SetPlayInactive() {
+        PlayButton.GetComponent<Button>().interactable = false;
+    }
+
+    public void SetDecideActive() {
+        DecideButton.GetComponent<Button>().interactable = true;
     }
 
 }
