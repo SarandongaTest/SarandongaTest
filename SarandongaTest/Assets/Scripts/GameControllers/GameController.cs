@@ -19,7 +19,6 @@ public class GameController : NetworkBehaviour {
     }
 
     public void Start() {
-        Debug.Log("Start");
         blackCard = GameObject.FindGameObjectWithTag("BlackCard");
         if (isLocalPlayer) {
             name += "Local";
@@ -47,7 +46,6 @@ public class GameController : NetworkBehaviour {
 
     [Command]
     private void CmdAddPlayer() {
-        Debug.Log("AddPlayer");
         ServerController.instance.AddPlayer(id, this.gameObject);
     }
 
@@ -95,7 +93,13 @@ public class GameController : NetworkBehaviour {
     [ClientRpc]
     public void RpcSetSelectPlayer() {
         if (!isLocalPlayer) return;
-        PlayerHand.instance.PlayCardTurn(false);
+        PlayerHand.instance.TriggerPlayCardTurn(false);
+    }
+
+    [ClientRpc]
+    public void RpcSelectCard() {
+        if (!isLocalPlayer) return;
+        PlayerHand.instance.DecideCard();
     }
 
     [ClientRpc]
@@ -113,7 +117,7 @@ public class GameController : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcPlayNewHand(NetworkIdentity id) {
-        PlayerHand.instance.PlayCardTurn(true);
+        PlayerHand.instance.TriggerPlayCardTurn(true);
         //Volver a la normalidad
     }
 

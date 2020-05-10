@@ -13,6 +13,7 @@ public class PlayerHand : MonoBehaviour {
     public List<GameObject> hand = new List<GameObject>();
     private GameObject selected = null;
     internal static int maxCards = 10;
+    private bool playingCard = true;
 
     private List<GameObject> cardsToDecide = new List<GameObject>();
 
@@ -32,6 +33,8 @@ public class PlayerHand : MonoBehaviour {
         if (selected == null) {
             SelectCard(card);
         }
+        card.SetActive(playingCard);
+        //Debug.Log(hand.Count + ": " + card.activeSelf);
     }
 
     public void AddCard(CardWhite card) {
@@ -56,7 +59,8 @@ public class PlayerHand : MonoBehaviour {
         card.GetComponent<CardDisplayWhite>().SetSelected(true);
     }
 
-    public void PlayCardTurn(bool playCardTurn) {
+    public void TriggerPlayCardTurn(bool playCardTurn) {
+        playingCard = playCardTurn;
         PhoneButtonsController.instance.SetPlayButtons(playCardTurn);
         foreach (GameObject card in hand) {
             card.SetActive(playCardTurn);
@@ -71,10 +75,17 @@ public class PlayerHand : MonoBehaviour {
         }
     }
 
+    public void DecideCard() {
+        PhoneButtonsController.instance.SetDecideActive();
+    }
+
     public void AddSelectionCard(string card) {
         cardsToDecide.Add(CardDisplayWhite.InstanciateCardDisplay(
             JSONObjectInterface.BuildFromJSON<CardWhite>(card),
             gameObject));
+        if (cardsToDecide.Count == 1) {
+            SelectCard(cardsToDecide[0]);
+        }
     }
 
     /*public void PlayCardTurn(bool playCardTurn, string[] cards) {
@@ -103,7 +114,7 @@ public class PlayerHand : MonoBehaviour {
         Destroy(selected);
     }
 
-    public void DecideCard() {
+    public void SelectWinnerCard() {
         GameController.instance.SendCard(selected);
 
     }

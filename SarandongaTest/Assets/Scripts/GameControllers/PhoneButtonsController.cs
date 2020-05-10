@@ -32,7 +32,7 @@ public class PhoneButtonsController : MonoBehaviour {
     }
 
     public void DecideCard() {
-        PlayerHand.instance.DecideCard();
+        PlayerHand.instance.SelectWinnerCard();
     }
 
     public static void ParseDeck() {

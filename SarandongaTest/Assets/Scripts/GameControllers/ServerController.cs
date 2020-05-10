@@ -33,10 +33,10 @@ public class ServerController : NetworkBehaviour {
     public void AddPlayer(NetworkIdentity id, GameObject go) {
         players.Add(id, go);
 
-        /*if (selector == null) {
+        if (selector == null) {
             selector = id;
             GetGameController(go).RpcSetSelectPlayer(); ;
-        }*/
+        }
     }
 
     public void DealCard(NetworkIdentity id, int count) {
@@ -56,7 +56,7 @@ public class ServerController : NetworkBehaviour {
         if (!selectingCard && !currentHand.ContainsValue(id)) {
             currentHand.Add(card, id);
             SendCardToSelector(card);
-            if (currentHand.Count >= players.Count) {
+            if (currentHand.Count >= players.Count-1) {
                 ManageSelectCard();
             }
         }
@@ -78,10 +78,8 @@ public class ServerController : NetworkBehaviour {
 
     private void ManageSelectCard() {
         selectingCard = true;
-        string[] cards = new string[currentHand.Count];
-        currentHand.Keys.CopyTo(cards, 0);
         players.TryGetValue(selector, out GameObject player);
-        GetGameController(player).RpcSetSelectPlayer();
+        GetGameController(player).RpcSelectCard();
     }
 
     public void GetBlackCard() {
