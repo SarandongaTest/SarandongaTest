@@ -69,7 +69,7 @@ public class GameController : NetworkBehaviour {
 
     [Command]
     private void CmdGetBlackCard() {
-        ServerController.instance.GetBlackCard();
+        ServerController.instance.UpdateBlackCard();
     }
 
     [ClientRpc]
@@ -91,9 +91,9 @@ public class GameController : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void RpcSetSelectPlayer() {
+    public void RpcSetPlayCardTurn(bool playCardTurn) {
         if (!isLocalPlayer) return;
-        PlayerHand.instance.TriggerPlayCardTurn(false);
+        PlayerHand.instance.TriggerPlayCardTurn(playCardTurn);
     }
 
     [ClientRpc]
@@ -116,9 +116,8 @@ public class GameController : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void RpcPlayNewHand(NetworkIdentity id) {
-        PlayerHand.instance.TriggerPlayCardTurn(true);
-        //Volver a la normalidad
+    public void RpcPlayNewHand() {
+        PlayerHand.instance.ActivatePlayButton();
     }
 
 }

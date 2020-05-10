@@ -35,7 +35,7 @@ public class ServerController : NetworkBehaviour {
 
         if (selector == null) {
             selector = id;
-            GetGameController(go).RpcSetSelectPlayer(); ;
+            GetGameController(go).RpcSetPlayCardTurn(false); ;
         }
     }
 
@@ -63,11 +63,25 @@ public class ServerController : NetworkBehaviour {
 
         //Select winner
         if (selectingCard && id.netId == selector.netId) {
-            currentHand.TryGetValue(card, out NetworkIdentity winner);
-            selector = winner;
-            GameController.instance.RpcPlayNewHand(selector);
+            //Last selector is now in play card turn
+            players.TryGetValue(selector, out GameObject selectorObject);
+            GetGameController(selectorObject).RpcSetPlayCardTurn(true);
+
+            //Update selector and clear hand
+            currentHand.TryGetValue(card, out selector);
             currentHand.Clear();
             selectingCard = false;
+
+            //Telling new selector
+            players.TryGetValue(selector, out selectorObject);
+            GetGameController(selectorObject).RpcSetPlayCardTurn(false);
+
+            //The server tell everyone to set interactable the play button if active
+            GameController.instance.RpcPlayNewHand();
+
+            //Update black card
+            blackCard = deck.DealBlackCard();
+            UpdateBlackCard();
         }
     }
 
@@ -82,7 +96,7 @@ public class ServerController : NetworkBehaviour {
         GetGameController(player).RpcSelectCard();
     }
 
-    public void GetBlackCard() {
+    public void UpdateBlackCard() {
         GameController.instance.RpcUpdateBlackCard(JSONObjectInterface.BuildJSON(blackCard));
     }
 

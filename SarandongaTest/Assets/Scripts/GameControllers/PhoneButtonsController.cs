@@ -47,11 +47,15 @@ public class PhoneButtonsController : MonoBehaviour {
         DecideButton.SetActive(!playing);
     }
 
-    public void SetPlayInactive() {
+    public void SetPlayNotInteractable() {
         PlayButton.GetComponent<Button>().interactable = false;
     }
 
-    public void SetDecideActive() {
+    public void SetPlayInteractable() {
+        PlayButton.GetComponent<Button>().interactable = true;
+    }
+
+    public void SetDecideInteractable() {
         DecideButton.GetComponent<Button>().interactable = true;
     }
 

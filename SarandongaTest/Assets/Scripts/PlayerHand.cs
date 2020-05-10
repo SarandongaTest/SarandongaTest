@@ -76,7 +76,7 @@ public class PlayerHand : MonoBehaviour {
     }
 
     public void DecideCard() {
-        PhoneButtonsController.instance.SetDecideActive();
+        PhoneButtonsController.instance.SetDecideInteractable();
     }
 
     public void AddSelectionCard(string card) {
@@ -88,27 +88,8 @@ public class PlayerHand : MonoBehaviour {
         }
     }
 
-    /*public void PlayCardTurn(bool playCardTurn, string[] cards) {
-        //PhoneButtonsController.instance.SetPlayButtons(playCardTurn);
-        if (!playCardTurn) {
-            foreach (string cardToDecide in cards) {
-                cardsToDecide.Add(CardDisplayWhite.InstanciateCardDisplay(
-                    JSONObjectInterface.BuildFromJSON<CardWhite>(cardToDecide),
-                    gameObject));
-            }
-            SelectCard(cardsToDecide[0]);
-        } else {
-            foreach (GameObject cardGameObject in cardsToDecide) {
-                Destroy(cardGameObject);
-            }
-            cardsToDecide.Clear();
-            SelectCard(hand[0]);
-        }
-
-    }*/
-
     public void PlayCard() {
-        PhoneButtonsController.instance.SetPlayInactive();
+        PhoneButtonsController.instance.SetPlayNotInteractable();
         RemoveCard(selected);
         GameController.instance.SendCard(selected);
         Destroy(selected);
@@ -117,5 +98,9 @@ public class PlayerHand : MonoBehaviour {
     public void SelectWinnerCard() {
         GameController.instance.SendCard(selected);
 
+    }
+
+    public void ActivatePlayButton() {
+        PhoneButtonsController.instance.SetPlayInteractable();
     }
 }
