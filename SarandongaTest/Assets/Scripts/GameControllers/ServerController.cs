@@ -14,7 +14,7 @@ public class ServerController : NetworkBehaviour {
     public Deck deck;
     public CardBlack blackCard;
     public bool selectingCard = false;
-    
+
     private void Start() {
         if (!isServer) return;
         instance = this;
@@ -25,9 +25,10 @@ public class ServerController : NetworkBehaviour {
         if (isServer) {
             instance = this;
             deck = Configurations.deck;
-            blackCard = deck.DealBlackCard();
+            do {
+                blackCard = deck.DealBlackCard();
+            } while (blackCard.pick != 1);
         }
-
     }
 
     public void AddPlayer(NetworkIdentity id, GameObject go) {
@@ -56,7 +57,7 @@ public class ServerController : NetworkBehaviour {
         if (!selectingCard && !currentHand.ContainsValue(id)) {
             currentHand.Add(card, id);
             SendCardToSelector(card);
-            if (currentHand.Count >= players.Count-1) {
+            if (currentHand.Count >= players.Count - 1) {
                 ManageSelectCard();
             }
         }
@@ -80,7 +81,9 @@ public class ServerController : NetworkBehaviour {
             GameController.instance.RpcPlayNewHand();
 
             //Update black card
-            blackCard = deck.DealBlackCard();
+            do {
+                blackCard = deck.DealBlackCard();
+            } while (blackCard.pick != 1);
             UpdateBlackCard();
         }
     }

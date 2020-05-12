@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class JSONPaths{
     public static readonly string fileName = "Deck.json";
-    public static readonly string path = "/JSONFiles/";
+    public static readonly string decksPath = "/JSONFiles/" + LanguageTags.lan + "/";
 }

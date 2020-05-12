@@ -25,7 +25,7 @@ public class CardDisplayBlack : CardDisplay {
     public override void SetDisplays() {
         name = GetInstanceID().ToString();
         cardDescription.text = card.text;
-        pickText.text = card.pick.ToString();
+        pickText.text = "Pick " + card.pick;
     }
 
     /// <summary>

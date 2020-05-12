@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHand : MonoBehaviour {
-
-    //public Rect radarScreen = new Rect(Screen.width * 0.86f, Screen.height * 0.01f, 180, 385);
+    
     public Vector2 scrollPosition = Vector2.zero;
 
     public static PlayerHand instance;
 
+    public int score = 0;
     public List<GameObject> hand = new List<GameObject>();
     private GameObject selected = null;
     internal static int maxCards = 10;
@@ -34,7 +34,6 @@ public class PlayerHand : MonoBehaviour {
             SelectCard(card);
         }
         card.SetActive(playingCard);
-        //Debug.Log(hand.Count + ": " + card.activeSelf);
     }
 
     public void AddCard(CardWhite card) {
@@ -61,22 +60,24 @@ public class PlayerHand : MonoBehaviour {
 
     public void TriggerPlayCardTurn(bool playCardTurn) {
         playingCard = playCardTurn;
-        PhoneButtonsController.instance.SetPlayButtons(playCardTurn);
+        UIController.instance.SetPlayButtons(playCardTurn);
         foreach (GameObject card in hand) {
             card.SetActive(playCardTurn);
         }
         if (playCardTurn) {
-            //SelectCard(cardsToDecide[0]);
             foreach (GameObject cardGameObject in cardsToDecide) {
                 Destroy(cardGameObject);
             }
             cardsToDecide.Clear();
             SelectCard(hand[0]);
+        } else {
+            score++;
+            UIController.instance.UpdateScoreText(score);
         }
     }
 
     public void DecideCard() {
-        PhoneButtonsController.instance.SetDecideInteractable();
+        UIController.instance.SetDecideInteractable();
     }
 
     public void AddSelectionCard(string card) {
@@ -89,7 +90,7 @@ public class PlayerHand : MonoBehaviour {
     }
 
     public void PlayCard() {
-        PhoneButtonsController.instance.SetPlayNotInteractable();
+        UIController.instance.SetPlayNotInteractable();
         RemoveCard(selected);
         GameController.instance.SendCard(selected);
         Destroy(selected);
@@ -101,6 +102,7 @@ public class PlayerHand : MonoBehaviour {
     }
 
     public void ActivatePlayButton() {
-        PhoneButtonsController.instance.SetPlayInteractable();
+        if (!playingCard) return;
+        UIController.instance.SetPlayInteractable();
     }
 }

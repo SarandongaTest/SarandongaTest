@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PhoneButtonsController : MonoBehaviour {
+public class UIController : MonoBehaviour {
 
-    public static PhoneButtonsController instance;
+    public Text tittleText;
+    public static UIController instance;
     public GameObject PlayButton;
     public GameObject DecideButton;
+    public Text scoreText;
 
     private void Awake() {
         instance = this;
@@ -18,9 +20,8 @@ public class PhoneButtonsController : MonoBehaviour {
         SceneManager.LoadScene("Menu");
     }
 
-    public void LoadPhoneScene() {
+    public void LoadDecks() {
         MenuController.LoadDecks();
-        //SceneManager.LoadScene("PhoneScene");
     }
 
     public void CloseApp() {
@@ -41,6 +42,7 @@ public class PhoneButtonsController : MonoBehaviour {
     }
 
     public void SetPlayButtons(bool playing) {
+        tittleText.text = playing ? LanguageTags.playACardTittle : LanguageTags.waitingForPlayersTittle;
         PlayButton.GetComponent<Button>().interactable = playing;
         PlayButton.SetActive(playing);
         DecideButton.GetComponent<Button>().interactable = playing;
@@ -48,15 +50,22 @@ public class PhoneButtonsController : MonoBehaviour {
     }
 
     public void SetPlayNotInteractable() {
+        tittleText.text = LanguageTags.waitingForPlayersTittle;
         PlayButton.GetComponent<Button>().interactable = false;
     }
 
     public void SetPlayInteractable() {
+        tittleText.text = LanguageTags.playACardTittle;
         PlayButton.GetComponent<Button>().interactable = true;
     }
 
     public void SetDecideInteractable() {
+        tittleText.text = LanguageTags.selectAWinnerTittle;
         DecideButton.GetComponent<Button>().interactable = true;
+    }
+
+    public void UpdateScoreText(int score) {
+        scoreText.text = LanguageTags.pointsTittle + score;
     }
 
 }
