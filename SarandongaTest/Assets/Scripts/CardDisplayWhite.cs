@@ -34,9 +34,9 @@ public class CardDisplayWhite : CardDisplay {
     /// <param name="cardPrefab"></param>
     /// <param name="parent"></param>
     /// <returns></returns>
-    public static GameObject InstanciateCardDisplay(CardWhite card, GameObject cardPrefab, GameObject parent) {
+    public static GameObject InstanciateCardDisplay(CardWhite card, GameObject parent) {
         return Instantiate(
-            cardPrefab.GetComponent<CardDisplayWhite>().SetCard(card),
+            Configurations.instance.whiteCardPrefab.GetComponent<CardDisplayWhite>().SetCard(card),
             parent.transform);
     }
 

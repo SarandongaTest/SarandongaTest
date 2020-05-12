@@ -18,7 +18,7 @@ public class JSONFileInterface {
     /// </summary>
     /// <param name="card"></param>
     public static void AppendLine(string text, string fileFolder) {
-        File.AppendAllText(Application.dataPath + JSONPaths.path + fileFolder + JSONPaths.fileName, /*"\r\n" + */text);
+        File.AppendAllText(Application.dataPath + JSONPaths.decksPath + fileFolder + JSONPaths.fileName, text);
     }
 
     /// <summary>
@@ -26,7 +26,7 @@ public class JSONFileInterface {
     /// </summary>
     /// <returns></returns>
     public static string RandomLine(string fileName) {
-        string[] cards = ReadAllLines(JSONPaths.path + fileName);
+        string[] cards = ReadAllLines(JSONPaths.decksPath + fileName);
         return cards[Random.Range(0, cards.Length)];
     }
 }

@@ -5,7 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Card
-  - Board
+  - BlackCard
+  - DecideButton
+  - PlayButton
   layers:
   - Default
   - TransparentFX
