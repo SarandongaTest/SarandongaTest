@@ -19,7 +19,7 @@ public class DeckParser {
             deck.whiteCards.Add(new CardWhite(cardInfo));
         }
         
-        Directory.CreateDirectory(Application.dataPath + JSONPaths.path + order[0]);
+        Directory.CreateDirectory(Application.dataPath + JSONPaths.decksPath + order[0]);
         JSONFileInterface.AppendLine(JSONObjectInterface.BuildJSON(deck), order[0] + "/");
     }
 }

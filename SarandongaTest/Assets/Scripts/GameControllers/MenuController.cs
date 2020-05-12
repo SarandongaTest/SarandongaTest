@@ -25,7 +25,7 @@ public class MenuController : MonoBehaviour {
     void Start() {
         gamesLobby.SetActive(false);
         playerLobby.SetActive(false);
-        foreach (string directory in Directory.GetDirectories(Application.dataPath + JSONPaths.path)) {
+        foreach (string directory in Directory.GetDirectories(Application.dataPath + JSONPaths.decksPath)) {
             GameObject deckItem = Instantiate(Configurations.instance.DeckSelectorPrefab, deckList.transform);
             if (directory.Contains("Base"))
                 deckItem.GetComponent<Toggle>().isOn = true;
