@@ -83,8 +83,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5146376135371433584}
   - component: {fileID: 5146376135371433585}
+  - component: {fileID: 370385589620127335}
   m_Layer: 5
-  m_Name: DeckSelector
+  m_Name: DeckItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,8 +157,37 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 370385589620127335}
+        m_MethodName: OnToogleChanged
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   m_IsOn: 0
+--- !u!114 &370385589620127335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5146376135371433587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3665a58beaab77489b6e51f641b1b7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckNameTittle: {fileID: 5146376137047299308}
+  deckPath: 
+  deck:
+    whiteCards: []
+    blackCards: []
+  initialized: 0
 --- !u!1 &5146376135982085441
 GameObject:
   m_ObjectHideFlags: 0

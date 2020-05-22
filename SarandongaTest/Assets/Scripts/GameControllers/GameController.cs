@@ -8,20 +8,17 @@ using UnityEngine.Networking;
 public class GameController : NetworkBehaviour {
 
     public static GameController instance;
+    [SyncVar]
     public string playerName;
 
     public GameObject blackCard;
     public GameObject decideBoard;
     private NetworkIdentity id;
 
-    private void Awake() {
-        this.name = Time.time + "";
-    }
-
     public void Start() {
+        name = playerName;
         blackCard = GameObject.FindGameObjectWithTag("BlackCard");
         if (isLocalPlayer) {
-            name += "Local";
             instance = this;
             CmdSetup();
         }
@@ -38,7 +35,6 @@ public class GameController : NetworkBehaviour {
             Invoke("CmdSetup", 1);
             return;
         }
-        //RpcSetup();
         CmdAddPlayer();
         CmdGetBlackCard();
         CmdAskForDeal(PlayerHand.maxCards);
@@ -91,15 +87,29 @@ public class GameController : NetworkBehaviour {
     }
 
     [ClientRpc]
+    public void RpcStartupSetSelectTurn() {
+        if (!isLocalPlayer) return;
+        PlayerHand.instance.BasicPlayCardTurn();
+    }
+
+    [ClientRpc]
     public void RpcSetPlayCardTurn(bool playCardTurn) {
+        if (!playCardTurn) {
+            if (isLocalPlayer) {
+                PopupController.instance.Setup("You won");
+            } else {
+                PopupController.instance.Setup(name + " won");
+            }
+        }
         if (!isLocalPlayer) return;
         PlayerHand.instance.TriggerPlayCardTurn(playCardTurn);
     }
 
     [ClientRpc]
-    public void RpcSelectCard() {
+    public void RpcProceedToDecide() {
+        UIController.instance.SetSelectingTittle();
         if (!isLocalPlayer) return;
-        PlayerHand.instance.DecideCard();
+        PlayerHand.instance.ProceedToDecideCard();
     }
 
     [ClientRpc]
@@ -109,15 +119,8 @@ public class GameController : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void RpcProceedToDecide() {
-        if (!isLocalPlayer) {
-            //X player is deciding
-        }
-    }
-
-    [ClientRpc]
     public void RpcPlayNewHand() {
-        PlayerHand.instance.ActivatePlayButton();
+        PlayerHand.instance.PlayNewHand();
     }
 
 }

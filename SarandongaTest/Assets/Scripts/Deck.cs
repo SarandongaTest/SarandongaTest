@@ -5,6 +5,7 @@ using UnityEngine;
 
 [Serializable]
 public class Deck {
+    public string deckName;
     public List<CardWhite> whiteCards = new List<CardWhite>();
     public List<CardBlack> blackCards = new List<CardBlack>();
 

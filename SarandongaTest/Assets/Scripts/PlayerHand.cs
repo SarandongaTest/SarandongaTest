@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHand : MonoBehaviour {
-    
+
     public Vector2 scrollPosition = Vector2.zero;
 
     public static PlayerHand instance;
@@ -23,6 +23,12 @@ public class PlayerHand : MonoBehaviour {
         }
     }
 
+    public void AddCard(CardWhite card) {
+        GameObject cardInstance = CardDisplayWhite.InstanciateCardDisplay(card,
+                gameObject);
+        AddCard(cardInstance);
+    }
+
     /// <summary>
     /// Add a CardDisplay to the hand and reajust the positions
     /// </summary>
@@ -34,12 +40,6 @@ public class PlayerHand : MonoBehaviour {
             SelectCard(card);
         }
         card.SetActive(playingCard);
-    }
-
-    public void AddCard(CardWhite card) {
-        GameObject cardInstance = CardDisplayWhite.InstanciateCardDisplay(card,
-                gameObject);
-        AddCard(cardInstance);
     }
 
     /// <summary>
@@ -58,12 +58,20 @@ public class PlayerHand : MonoBehaviour {
         card.GetComponent<CardDisplayWhite>().SetSelected(true);
     }
 
-    public void TriggerPlayCardTurn(bool playCardTurn) {
+    /// <summary>
+    /// Set the UI to a selecting or not
+    /// </summary>
+    /// <param name="playCardTurn"></param>
+    public void BasicPlayCardTurn(bool playCardTurn = false) {
         playingCard = playCardTurn;
         UIController.instance.SetPlayButtons(playCardTurn);
         foreach (GameObject card in hand) {
             card.SetActive(playCardTurn);
         }
+    }
+
+    public void TriggerPlayCardTurn(bool playCardTurn) {
+        BasicPlayCardTurn(playCardTurn);
         if (playCardTurn) {
             foreach (GameObject cardGameObject in cardsToDecide) {
                 Destroy(cardGameObject);
@@ -76,7 +84,7 @@ public class PlayerHand : MonoBehaviour {
         }
     }
 
-    public void DecideCard() {
+    public void ProceedToDecideCard() {
         UIController.instance.SetDecideInteractable();
     }
 
@@ -90,19 +98,20 @@ public class PlayerHand : MonoBehaviour {
     }
 
     public void PlayCard() {
-        UIController.instance.SetPlayNotInteractable();
+        UIController.instance.SetPlayButtonAndTittle(false);
         RemoveCard(selected);
         GameController.instance.SendCard(selected);
         Destroy(selected);
     }
+
 
     public void SelectWinnerCard() {
         GameController.instance.SendCard(selected);
 
     }
 
-    public void ActivatePlayButton() {
+    public void PlayNewHand() {
         if (!playingCard) return;
-        UIController.instance.SetPlayInteractable();
+        UIController.instance.SetPlayButtonAndTittle(true);
     }
 }

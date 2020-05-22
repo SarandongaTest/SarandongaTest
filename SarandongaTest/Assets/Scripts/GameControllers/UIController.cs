@@ -20,10 +20,6 @@ public class UIController : MonoBehaviour {
         SceneManager.LoadScene("Menu");
     }
 
-    public void LoadDecks() {
-        MenuController.LoadDecks();
-    }
-
     public void CloseApp() {
         Application.Quit();
     }
@@ -32,40 +28,41 @@ public class UIController : MonoBehaviour {
         PlayerHand.instance.PlayCard();
     }
 
-    public void DecideCard() {
+    public void SelectWinner() {
         PlayerHand.instance.SelectWinnerCard();
     }
 
-    public static void ParseDeck() {
-        DeckParser deckParser = JSONObjectInterface.BuildFromJSON<DeckParser>(JSONFileInterface.RandomLine("Base/original.json"));
-        deckParser.StoreDeck();
-    }
-
+    /// <summary>
+    /// Sets the Tittle and the Buttons to the correct state
+    /// </summary>
+    /// <param name="playing"></param>
     public void SetPlayButtons(bool playing) {
-        tittleText.text = playing ? LanguageTags.playACardTittle : LanguageTags.waitingForPlayersTittle;
-        PlayButton.GetComponent<Button>().interactable = playing;
+        SetPlayButtonAndTittle(playing);
         PlayButton.SetActive(playing);
         DecideButton.GetComponent<Button>().interactable = playing;
         DecideButton.SetActive(!playing);
     }
 
-    public void SetPlayNotInteractable() {
-        tittleText.text = LanguageTags.waitingForPlayersTittle;
-        PlayButton.GetComponent<Button>().interactable = false;
-    }
-
-    public void SetPlayInteractable() {
-        tittleText.text = LanguageTags.playACardTittle;
-        PlayButton.GetComponent<Button>().interactable = true;
+    public void SetPlayButtonAndTittle(bool state) {
+        tittleText.text = state ? LanguageTags.instance.playACardTittle : LanguageTags.instance.waitingForPlayersTittle;
+        PlayButton.GetComponent<Button>().interactable = state;
     }
 
     public void SetDecideInteractable() {
-        tittleText.text = LanguageTags.selectAWinnerTittle;
+        tittleText.text = LanguageTags.instance.selectAWinnerTittle;
         DecideButton.GetComponent<Button>().interactable = true;
     }
 
-    public void UpdateScoreText(int score) {
-        scoreText.text = LanguageTags.pointsTittle + score;
+    public void SetSelectingTittle() {
+        tittleText.text = LanguageTags.instance.waitingForSelectTittle;
     }
 
+    public void UpdateScoreText(int score) {
+        scoreText.text = LanguageTags.instance.pointsTittle + score;
+    }
+
+    /*public static void ParseDeck() {
+        DeckParser deckParser = JSONObjectInterface.BuildFromJSON<DeckParser>(JSONFileInterface.RandomLine("Base/original.json"));
+        deckParser.StoreDeck();
+    }*/
 }

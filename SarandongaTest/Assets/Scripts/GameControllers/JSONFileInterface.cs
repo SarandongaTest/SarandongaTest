@@ -4,29 +4,32 @@ using System.IO;
 using UnityEngine;
 
 public class JSONFileInterface {
-
     /// <summary>
     /// Reads all the lines on the JSON file
     /// </summary>
     /// <returns></returns>
-    public static string[] ReadAllLines(string fileName) {
-        return File.ReadAllLines(Application.dataPath + fileName);
+    public static string[] ReadAllLines(string path) {
+        return File.ReadAllLines(path);
     }
 
     /// <summary>
     /// Adds the Card information to the end of the file
     /// </summary>
     /// <param name="card"></param>
-    public static void AppendLine(string text, string fileFolder) {
-        File.AppendAllText(Application.dataPath + JSONPaths.decksPath + fileFolder + JSONPaths.fileName, text);
+    public static void AppendLine(string text, string path) {
+        File.AppendAllText(path, text);
     }
 
     /// <summary>
     /// Return a random line from the JSON file
     /// </summary>
     /// <returns></returns>
-    public static string RandomLine(string fileName) {
-        string[] cards = ReadAllLines(JSONPaths.decksPath + fileName);
+    public static string RandomLine(string path) {
+        string[] cards = ReadAllLines(path);
         return cards[Random.Range(0, cards.Length)];
+    }
+
+    public static string ReadLine(string path, int line) {
+        return ReadAllLines(path)[line];
     }
 }

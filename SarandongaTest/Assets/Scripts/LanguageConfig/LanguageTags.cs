@@ -1,21 +1,48 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class LanguageTags {
-    public static string lan = "en";
-    public static string decksTittle = "Decks";
-    public static string gamePlaceholderText = "Game name";
-    public static string hostGameButton = "Host game";
-    public static string joinGameButton = "Join game";
-    public static string joinButton = "Join";
-    public static string waitingButton = "Waiting";
-    public static string readyButton = "Ready!";
-    public static string playCardButton = "Play card";
-    public static string selectWinnerButton = "Select winner";
-    public static string pickBlackCard = "Pick: ";
-    public static string playACardTittle = "Play a card";
-    public static string waitingForPlayersTittle = "Waiting for other players";
-    public static string selectAWinnerTittle = "Select a winner";
-    public static string pointsTittle = "Points: ";
+[Serializable]
+public class LanguageTags {
+
+    public static LanguageTags instance;
+
+    public LanguageTags() {
+        instance = this;
+    }
+
+    public LanguageTags(string language) {
+        instance = this;
+        Setup(language);
+    }
+
+    public string lan = "English";
+    public string decksTittle = "Decks";
+    public string deckPlaceholderText = "Deck code";
+    public string deckLoadButton = "Load";
+    public string gamePlaceholderText = "Game name";
+    public string hostGameButton = "Host game";
+    public string joinGameButton = "Join game";
+    public string gamesTittle = "Games";
+    public string joinButton = "Join";
+    public string refreshButton = "Refresh";
+    public string waitingButton = "Waiting";
+    public string readyButton = "Ready!";
+    public string playCardButton = "Play card";
+    public string selectWinnerButton = "Select winner";
+    public string pickBlackCard = "Pick: ";
+    public string playACardTittle = "Play a card";
+    public string waitingForPlayersTittle = "Waiting for other players";
+    public string selectAWinnerTittle = "Select a winner";
+    public string waitingForSelectTittle = "Selecting a winner";
+    public string pointsTittle = "Points: ";
+
+    public void Setup(string language) {
+        //language = "English";
+        JSONObjectInterface.ExtractFromJSON(
+            this,
+            JSONFileInterface.ReadLine(JSONPaths.GetLanguagePath() + language + ".json", 0)
+            );
+    }
 }

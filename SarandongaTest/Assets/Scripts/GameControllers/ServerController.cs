@@ -36,7 +36,7 @@ public class ServerController : NetworkBehaviour {
 
         if (selector == null) {
             selector = id;
-            GetGameController(go).RpcSetPlayCardTurn(false); ;
+            GetGameController(go).RpcStartupSetSelectTurn();
         }
     }
 
@@ -96,7 +96,7 @@ public class ServerController : NetworkBehaviour {
     private void ManageSelectCard() {
         selectingCard = true;
         players.TryGetValue(selector, out GameObject player);
-        GetGameController(player).RpcSelectCard();
+        GetGameController(player).RpcProceedToDecide();
     }
 
     public void UpdateBlackCard() {

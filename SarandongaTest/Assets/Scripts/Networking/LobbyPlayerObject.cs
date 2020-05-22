@@ -10,21 +10,20 @@ public class LobbyPlayerObject : MonoBehaviour {
     public Button playerButton;
     public Text buttonText;
 
-    public void Setup(string name, bool isLocalPlayer, LobbyPlayerController controller) {
+    public void Setup(bool isLocalPlayer, LobbyPlayerController controller) {
+        buttonText.text = LanguageTags.instance.waitingButton;
         if (isLocalPlayer) {
             playerButton.interactable = true;
-            playerNameText.text = name;
         }
         this.controller = controller;
     }
 
     public void OnReadyClicked() {
         controller.OnReady();
+        buttonText.text = controller.IsReady() ? LanguageTags.instance.readyButton : LanguageTags.instance.waitingButton;
     }
 
-    private void Update() {
-        if (controller != null) {
-            buttonText.text = controller.IsReady() ? "Ready" : "Waiting";
-        }
+    public void UpdateNameText(string newName) {
+        playerNameText.text = newName;
     }
 }

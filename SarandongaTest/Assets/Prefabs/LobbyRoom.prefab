@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchNameText: {fileID: 4585572395558329249}
+  joinButton: {fileID: 2798431573250508235}
 --- !u!1 &3493853841512700226
 GameObject:
   m_ObjectHideFlags: 0

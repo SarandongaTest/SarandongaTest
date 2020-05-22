@@ -10,10 +10,12 @@ public class LobbyRoom : MonoBehaviour {
 
     public MatchInfoSnapshot match;
     public Text matchNameText;
+    public Text joinButton;
 
     public void Setup(MatchInfoSnapshot match) {
         this.match = match;
         matchNameText.text = match.name;
+        joinButton.text = LanguageTags.instance.joinButton;
     }
 
     public void OnJoinButton() {
